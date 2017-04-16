@@ -20,7 +20,7 @@ app.on('ready', function(){
   // メインウィンドウに表示するURLを指定します
   // （今回はmain.jsと同じディレクトリのindex.html）
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'src', 'index.html'),
+    pathname: path.join(__dirname, 'dist', 'index.html'),
     protocol: 'file:',
     slashes: true
   }))
