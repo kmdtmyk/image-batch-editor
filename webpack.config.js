@@ -18,6 +18,7 @@ module.exports = {
     },
     extensions: ['.js', '.vue'],
   },
+  devtool: 'inline-source-map',
   devServer: {
     contentBase: 'dist',
   },
