@@ -68,6 +68,7 @@ import _ from 'lodash'
 import path from 'path'
 import moment from 'moment'
 import ImageUtil from './ImageUtil'
+const del = global.require('del')
 
 export default {
   data(){
@@ -109,6 +110,7 @@ export default {
     clear(){
       this.progress = 0
       this.results = []
+      del.sync('log/divide*')
     }
   }
 }
