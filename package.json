@@ -7,7 +7,7 @@
     "webpack": "webpack -w",
     "server": "webpack-dev-server",
     "electron": "electron .",
-    "build": "electron-packager . ImageDivider --platform=win32 --arch=x64 --overwrite --electron-version=1.6.2 --asar=true",
+    "build": "electron-packager . ImageDivider --platform=win32 --arch=x64 --overwrite --electron-version=1.6.2 --asar=true --out=build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
