@@ -1,6 +1,15 @@
 <template>
   <div style='height: 100%;'>
     <div>
+      <label>出力形式</label>
+      <label>
+        <input type='radio' v-model='options.outputMode' value='file'>file
+      </label>
+      <label>
+        <input type='radio' v-model='options.outputMode' value='size'>base64
+      </label>
+    </div>
+    <div>
       <label>左</label>
       <input type='number' v-model.number='options.left'>px
     </div>
@@ -35,16 +44,21 @@
     </div>
 
     <div v-if='results.length' class='result' contenteditable>
-      <img v-for='result in results' :src='result'>
+      <img v-for='result in results' :src='result.src'>
     </div>
   </div>
 </template>
 
 <script>
+import _ from 'lodash'
+import path from 'path'
+import ImageUtil from './ImageUtil'
+
 export default{
   data(){
     return {
       options: {
+        outputMode: 'file',
         left: 29,
         top: 105,
         width: 320,
@@ -64,9 +78,18 @@ export default{
       this.clear()
       var underImage =  await createImage(this.under)
       var results = []
-      for(var file of this.files){
+      for(var i = 0; i < this.files.length; i++){
+        var file = this.files[i]
         var fileImage =  await createImage(file)
-        results.push(await combineImage(underImage, fileImage, this.options))
+        var base64 = await combineImage(underImage, fileImage, this.options)
+        var src
+        if(this.options.outputMode === 'file'){
+          var name = 'combine' + (i + 1) + '.png'
+          src = await ImageUtil.writeFileBase64(base64, path.join('log', name))
+        }else{
+          src = base64
+        }
+        results.push({src})
         this.progress += 1
       }
       this.results = results

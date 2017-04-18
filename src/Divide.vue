@@ -129,7 +129,7 @@ async function divide(file, options){
       var base64 = result[size.col * y + x]
       var src
       if(options.outputMode === 'file'){
-        var name = (y + 1) + '-' + (x + 1) + '.png'
+        var name = 'divide' + (y + 1) + '-' + (x + 1) + '.png'
         src = await ImageUtil.writeFileBase64(base64, path.join('log', name))
       }else{
         src = base64
