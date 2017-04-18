@@ -1,7 +1,4 @@
-const electron = require('electron')
-const app = electron.app
-const BrowserWindow = electron.BrowserWindow
-
+const { app, BrowserWindow, protocol } = require('electron')
 const path = require('path')
 const url = require('url')
 
@@ -13,8 +10,8 @@ let mainWindow
 app.on('ready', function(){
   // メインウィンドウを作成します
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600
+    width: 1200,
+    height: 800
   })
 
   // メインウィンドウに表示するURLを指定します

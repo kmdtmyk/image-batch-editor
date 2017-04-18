@@ -48,7 +48,7 @@
 
     <div v-for='result in results' class='result' contenteditable>
       <div v-for='row in result'>
-        <img :src='image' v-for='image in row'>
+        <img :src='image.filePath' v-for='image in row'>
       </div>
     </div>
   </div>
@@ -56,12 +56,15 @@
 
 <script>
 import _ from 'lodash'
+import path from 'path'
+import moment from 'moment'
+import ImageUtil from './ImageUtil'
 
 export default {
   data(){
     return {
       options: {
-        mode: 'size',
+        mode: 'number',
         size: {
           width: 100,
           height: 200,
@@ -108,7 +111,19 @@ async function divide(file, options){
   }else if(mode === 'number'){
     var {result, size} = await divideByNumber(base64, options.number)
   }
-  return _.chunk(result, size.col)
+  var filename = moment().format('YYYYMMDD_HHmmss')
+  var results = []
+  for(var y = 0; y < size.row; y++){
+    var row = []
+    for(var x = 0; x < size.col; x++){
+      var name = (y + 1) + '-' + (x + 1) + '.png'
+      var base64 = result[size.col * y + x]
+      var filePath = await ImageUtil.writeFileBase64(base64, path.join('log', name))
+      row.push({base64, filePath})
+    }
+    results.push(row)
+  }
+  return results
 }
 
 function createImage(file){
