@@ -52,6 +52,7 @@
 <script>
 import _ from 'lodash'
 import path from 'path'
+import moment from 'moment'
 import ImageUtil from './ImageUtil'
 
 export default{
@@ -78,13 +79,14 @@ export default{
       this.clear()
       var underImage =  await createImage(this.under)
       var results = []
+      var filename = 'combine' + moment().format('YYYYMMDD_HHmmss')
       for(var i = 0; i < this.files.length; i++){
         var file = this.files[i]
         var fileImage =  await createImage(file)
         var base64 = await combineImage(underImage, fileImage, this.options)
         var src
         if(this.options.outputMode === 'file'){
-          var name = 'combine' + (i + 1) + '.png'
+          var name = filename + (i + 1) + '.png'
           src = await ImageUtil.writeFileBase64(base64, path.join('log', name))
         }else{
           src = base64

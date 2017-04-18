@@ -121,7 +121,7 @@ async function divide(file, options){
   }else if(mode === 'number'){
     var {result, size} = await divideByNumber(base64, options.number)
   }
-  var filename = moment().format('YYYYMMDD_HHmmss')
+  var filename = 'divide' + moment().format('YYYYMMDD_HHmmss')
   var results = []
   for(var y = 0; y < size.row; y++){
     var row = []
@@ -129,7 +129,7 @@ async function divide(file, options){
       var base64 = result[size.col * y + x]
       var src
       if(options.outputMode === 'file'){
-        var name = 'divide' + (y + 1) + '-' + (x + 1) + '.png'
+        var name = filename + (y + 1) + '-' + (x + 1) + '.png'
         src = await ImageUtil.writeFileBase64(base64, path.join('log', name))
       }else{
         src = base64
