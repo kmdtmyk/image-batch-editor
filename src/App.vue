@@ -2,6 +2,15 @@
   <div style='height: 100%;'>
     <div>
       <div>
+        <label>出力形式</label>
+        <label>
+          <input type='radio' v-model='options.outputMode' value='file'>file
+        </label>
+        <label>
+          <input type='radio' v-model='options.outputMode' value='size'>base64
+        </label>
+      </div>
+      <div>
         <label>
           <input type='radio' v-model='options.mode' value='size'>分割サイズで指定
         </label>
@@ -48,7 +57,7 @@
 
     <div v-for='result in results' class='result' contenteditable>
       <div v-for='row in result'>
-        <img :src='image.filePath' v-for='image in row'>
+        <img :src='image.src' v-for='image in row'>
       </div>
     </div>
   </div>
@@ -64,6 +73,7 @@ export default {
   data(){
     return {
       options: {
+        outputMode: 'file',
         mode: 'number',
         size: {
           width: 100,
@@ -116,10 +126,15 @@ async function divide(file, options){
   for(var y = 0; y < size.row; y++){
     var row = []
     for(var x = 0; x < size.col; x++){
-      var name = (y + 1) + '-' + (x + 1) + '.png'
       var base64 = result[size.col * y + x]
-      var filePath = await ImageUtil.writeFileBase64(base64, path.join('log', name))
-      row.push({base64, filePath})
+      var src
+      if(options.outputMode === 'file'){
+        var name = (y + 1) + '-' + (x + 1) + '.png'
+        src = await ImageUtil.writeFileBase64(base64, path.join('log', name))
+      }else{
+        src = base64
+      }
+      row.push({src})
     }
     results.push(row)
   }
