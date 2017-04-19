@@ -1,13 +1,13 @@
 {
-  "name": "image-divider",
+  "name": "image-batch-editor",
   "version": "0.0.0",
-  "description": "image-divider",
+  "description": "image batch editor",
   "main": "index.js",
   "scripts": {
     "webpack": "webpack -w",
     "server": "webpack-dev-server",
     "electron": "electron .",
-    "build": "electron-packager . ImageDivider --platform=win32 --arch=x64 --overwrite --electron-version=1.6.2 --asar=true --out=build",
+    "build": "electron-packager . ImageBatchEditor --platform=win32 --arch=x64 --overwrite --electron-version=1.6.2 --asar=true --out=build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
