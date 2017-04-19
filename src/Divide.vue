@@ -43,7 +43,7 @@
 
     <div>
       <label>画像</label>
-      <input type='file' @change='onFileChange' multiple>
+      <input type='file' @change='onFileChange' accept='image/*' multiple>
     </div>
 
     <div>

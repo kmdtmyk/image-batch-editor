@@ -27,11 +27,11 @@
     </div>
     <div>
       <label>合成元</label>
-      <input type='file' @change='onUnderChange' multiple>
+      <input type='file' @change='onUnderChange' accept='image/*' multiple>
     </div>
     <div>
       <label>画像</label>
-      <input type='file' @change='onFileChange' multiple>
+      <input type='file' @change='onFileChange' accept='image/*' multiple>
     </div>
 
     <div>
