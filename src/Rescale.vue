@@ -101,7 +101,7 @@ export default{
 
       var results = []
       for(var file of this.files){
-        var image =  await createImage(file)
+        var image =  await ImageUtil.fileToImage(file)
         var width
         var height
         if(this.options.mode === 'scale'){
@@ -144,27 +144,6 @@ function rescaleImage(image, options){
   var context = canvas.getContext('2d')
   context.drawImage(image, 0, 0, image.width, image.height, 0, 0, width, height)
   return canvas.toDataURL()
-}
-
-async function createImage(file){
-  var base64 = await createBase64(file)
-  var image = new Image()
-  image.src = base64
-  return new Promise((resolve) => {
-    image.onload = (e) => {
-      resolve(image)
-    }
-  })
-}
-
-function createBase64(file){
-  var reader = new FileReader()
-  reader.readAsDataURL(file)
-  return new Promise((resolve) => {
-    reader.onload = (e) => {
-      resolve(e.target.result)
-    }
-  })
 }
 </script>
 

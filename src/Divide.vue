@@ -119,7 +119,7 @@ export default {
 }
 
 async function divide(file, options){
-  var base64 =  await createImage(file)
+  var base64 =  await ImageUtil.fileToBase64(file)
   const mode = options.mode
   if(mode === 'size'){
     var {result, size} = await divideBySize(base64, options.size)
@@ -143,16 +143,6 @@ async function divide(file, options){
     results.push(row)
   }
   return results
-}
-
-function createImage(file){
-  var reader = new FileReader()
-  reader.readAsDataURL(file)
-  return new Promise((resolve) => {
-    reader.onload = (e) => {
-      resolve(e.target.result)
-    }
-  })
 }
 
 function divideBySize(base64, options){

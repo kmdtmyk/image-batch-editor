@@ -81,12 +81,12 @@ export default{
       this.clear()
       this.runtime = Date.now()
 
-      var underImage =  await createImage(this.under)
+      var underImage =  await ImageUtil.fileToImage(this.under)
       var results = []
       var filename = 'combine' + moment().format('YYYYMMDD_HHmmss')
       for(var i = 0; i < this.files.length; i++){
         var file = this.files[i]
-        var fileImage =  await createImage(file)
+        var fileImage =  await ImageUtil.fileToImage(file)
         var base64 = await combineImage(underImage, fileImage, this.options)
         var src
         if(this.options.outputMode === 'file'){
@@ -124,27 +124,6 @@ function combineImage(under, image, options){
   context.drawImage(under, 0, 0)
   context.drawImage(image, 0, 0, options.width, options.height, options.left, options.top, options.width, options.height)
   return canvas.toDataURL()
-}
-
-async function createImage(file){
-  var base64 = await createBase64(file)
-  var image = new Image()
-  image.src = base64
-  return new Promise((resolve) => {
-    image.onload = (e) => {
-      resolve(image)
-    }
-  })
-}
-
-function createBase64(file){
-  var reader = new FileReader()
-  reader.readAsDataURL(file)
-  return new Promise((resolve) => {
-    reader.onload = (e) => {
-      resolve(e.target.result)
-    }
-  })
 }
 </script>
 
