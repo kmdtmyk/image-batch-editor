@@ -98,7 +98,7 @@ export default {
       }
       this.clear()
       this.runtime = Date.now()
-      
+
       var results = []
       for(var file of this.files){
         results.push(await divide(file, this.options))

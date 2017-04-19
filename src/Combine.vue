@@ -80,7 +80,7 @@ export default{
       }
       this.clear()
       this.runtime = Date.now()
-      
+
       var underImage =  await createImage(this.under)
       var results = []
       var filename = 'combine' + moment().format('YYYYMMDD_HHmmss')
