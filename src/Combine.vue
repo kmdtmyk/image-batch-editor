@@ -44,7 +44,7 @@
     </div>
 
     <div v-if='results.length' class='result' contenteditable>
-      <img v-for='result in results' :src='result.src'>
+      <my-image v-for='(image, index) in results' :key='index' :src='image.src'/>
     </div>
   </div>
 </template>
@@ -54,9 +54,13 @@ import _ from 'lodash'
 import path from 'path'
 import moment from 'moment'
 import ImageUtil from './ImageUtil'
+import MyImage from './components/Image'
 const del = global.require('del')
 
 export default{
+  components: {
+    MyImage
+  },
   data(){
     return {
       options: {

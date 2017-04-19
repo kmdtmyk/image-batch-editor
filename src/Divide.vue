@@ -57,7 +57,7 @@
 
     <div v-for='result in results' class='result' contenteditable>
       <div v-for='row in result'>
-        <img :src='image.src' v-for='image in row'>
+        <my-image :src='image.src' :key='index' v-for='(image, index) in row'/>
       </div>
     </div>
   </div>
@@ -68,9 +68,13 @@ import _ from 'lodash'
 import path from 'path'
 import moment from 'moment'
 import ImageUtil from './ImageUtil'
+import MyImage from './components/Image'
 const del = global.require('del')
 
 export default {
+  components: {
+    MyImage
+  },
   data(){
     return {
       options: {
@@ -217,12 +221,6 @@ function clipImage(image, left, top, width, height){
 </script>
 
 <style>
-img{
-  margin: 5px;
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4);
-  line-height: 0;
-}
-
 .result{
   border: 1px solid black;
   overflow: scroll;
