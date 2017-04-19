@@ -57,7 +57,7 @@
 
     <div v-for='result in results' class='result' contenteditable>
       <div v-for='row in result'>
-        <img :src='image.src' v-for='image in row'>
+        <img :src='image.src + "?" + runtime' v-for='image in row'>
       </div>
     </div>
   </div>
@@ -88,6 +88,7 @@ export default {
       results: [],
       files: [],
       progress: 0,
+      runtime: null,
     }
   },
   methods: {
@@ -96,6 +97,8 @@ export default {
         return
       }
       this.clear()
+      this.runtime = Date.now()
+      
       var results = []
       for(var file of this.files){
         results.push(await divide(file, this.options))

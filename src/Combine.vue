@@ -44,7 +44,7 @@
     </div>
 
     <div v-if='results.length' class='result' contenteditable>
-      <img v-for='result in results' :src='result.src'>
+      <img v-for='result in results' :src='result.src + "?" + runtime'>
     </div>
   </div>
 </template>
@@ -70,6 +70,7 @@ export default{
       files: [],
       results: [],
       progress: 0,
+      runtime: null,
     }
   },
   methods: {
@@ -78,6 +79,8 @@ export default{
         return;
       }
       this.clear()
+      this.runtime = Date.now()
+      
       var underImage =  await createImage(this.under)
       var results = []
       var filename = 'combine' + moment().format('YYYYMMDD_HHmmss')
