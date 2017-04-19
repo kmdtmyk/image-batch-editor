@@ -131,6 +131,7 @@ export default{
     clear(){
       this.progress = 0
       this.results = []
+      del.sync('log/rescale/*')
     }
   }
 }
