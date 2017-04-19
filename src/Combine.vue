@@ -87,8 +87,8 @@ export default{
         var base64 = await combineImage(underImage, fileImage, this.options)
         var src
         if(this.options.outputMode === 'file'){
-          var name = filename + (i + 1) + '.png'
-          src = await ImageUtil.writeFileBase64(base64, path.join('log', name))
+          var filepath = path.join('log', 'combine', file.name)
+          src = await ImageUtil.writeFileBase64(base64, filepath)
         }else{
           src = base64
         }
@@ -108,7 +108,7 @@ export default{
     clear(){
       this.progress = 0
       this.results = []
-      del.sync('log/combine*')
+      del.sync('log/combine/*')
     }
   }
 }
