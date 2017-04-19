@@ -58,7 +58,7 @@
     </div>
 
     <div v-if='results.length' class='result' contenteditable>
-      <img v-for='image in results' :src='image.src + "?" + runtime'>
+      <img v-for='image in results' :src='image.src'>
     </div>
   </div>
 </template>
@@ -88,7 +88,6 @@ export default{
       results: [],
       files: [],
       progress: 0,
-      runtime: null,
     }
   },
   methods: {
@@ -97,8 +96,7 @@ export default{
         return;
       }
       this.clear()
-      this.runtime = Date.now()
-
+      var now = Date.now()
       var results = []
       for(var file of this.files){
         var image =  await ImageUtil.fileToImage(file)
@@ -115,7 +113,7 @@ export default{
         var src
         if(this.options.outputMode === 'file'){
           var filepath = path.join('log', 'rescale', file.name)
-          src = await ImageUtil.writeFileBase64(base64, filepath)
+          src = await ImageUtil.writeFileBase64(base64, filepath) + '?' + now
         }else{
           src = base64
         }

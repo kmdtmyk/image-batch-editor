@@ -44,7 +44,7 @@
     </div>
 
     <div v-if='results.length' class='result' contenteditable>
-      <img v-for='result in results' :src='result.src + "?" + runtime'>
+      <img v-for='result in results' :src='result.src'>
     </div>
   </div>
 </template>
@@ -70,7 +70,6 @@ export default{
       files: [],
       results: [],
       progress: 0,
-      runtime: null,
     }
   },
   methods: {
@@ -79,11 +78,9 @@ export default{
         return;
       }
       this.clear()
-      this.runtime = Date.now()
-
       var underImage =  await ImageUtil.fileToImage(this.under)
       var results = []
-      var filename = 'combine' + moment().format('YYYYMMDD_HHmmss')
+      var now = Date.now()
       for(var i = 0; i < this.files.length; i++){
         var file = this.files[i]
         var fileImage =  await ImageUtil.fileToImage(file)
@@ -91,7 +88,7 @@ export default{
         var src
         if(this.options.outputMode === 'file'){
           var filepath = path.join('log', 'combine', file.name)
-          src = await ImageUtil.writeFileBase64(base64, filepath)
+          src = await ImageUtil.writeFileBase64(base64, filepath) + '?' + now
         }else{
           src = base64
         }

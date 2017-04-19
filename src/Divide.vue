@@ -57,7 +57,7 @@
 
     <div v-for='result in results' class='result' contenteditable>
       <div v-for='row in result'>
-        <img :src='image.src + "?" + runtime' v-for='image in row'>
+        <img :src='image.src' v-for='image in row'>
       </div>
     </div>
   </div>
@@ -88,7 +88,6 @@ export default {
       results: [],
       files: [],
       progress: 0,
-      runtime: null,
     }
   },
   methods: {
@@ -97,7 +96,6 @@ export default {
         return
       }
       this.clear()
-      this.runtime = Date.now()
 
       var results = []
       for(var file of this.files){
@@ -127,6 +125,7 @@ async function divide(file, options){
     var {result, size} = await divideByNumber(base64, options.number)
   }
   var results = []
+  var now = Date.now()
   for(var y = 0; y < size.row; y++){
     var row = []
     for(var x = 0; x < size.col; x++){
@@ -134,7 +133,7 @@ async function divide(file, options){
       var src
       if(options.outputMode === 'file'){
         var filename = path.join('log', 'divide', file.name, (y + 1) + '-' + (x + 1) + '.png')
-        src = await ImageUtil.writeFileBase64(base64, filename)
+        src = await ImageUtil.writeFileBase64(base64, filename) + '?' + now
       }else{
         src = base64
       }
