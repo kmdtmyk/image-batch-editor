@@ -67,7 +67,7 @@
 import _ from 'lodash'
 import path from 'path'
 import moment from 'moment'
-import ImageUtil from './ImageUtil'
+import ImageUtil from './lib/ImageUtil'
 import MyImage from './components/Image'
 const del = global.require('del')
 
