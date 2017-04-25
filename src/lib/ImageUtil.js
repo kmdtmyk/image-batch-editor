@@ -15,4 +15,15 @@ export default class{
     })
   }
 
+  static clip(image, left, top, width, height){
+    width = Math.min(image.width - left, width)
+    height = Math.min(image.height - top, height)
+    var canvas = document.createElement('canvas')
+    canvas.width = width
+    canvas.height = height
+    var context = canvas.getContext('2d')
+    context.drawImage(image, left, top, width, height, 0, 0, width, height)
+    return canvas.toDataURL()
+  }
+
 }

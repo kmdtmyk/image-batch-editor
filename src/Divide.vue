@@ -167,7 +167,7 @@ function divideBySize(base64, options){
       do{
         var left = 0
         do{
-          var base64 = clipImage(image, left, top, sizeWidth, sizeHeight)
+          var base64 = ImageUtil.clip(image, left, top, sizeWidth, sizeHeight)
           result.push(base64)
           left += sizeWidth
         }while(left < image.width)
@@ -197,7 +197,7 @@ function divideByNumber(base64, options){
         for(var j = 0; j < horizontal; j++){
           var left = sizeWidth * j
           var top = sizeHeight * i
-          var base64 = clipImage(image, left, top, sizeWidth, sizeHeight)
+          var base64 = ImageUtil.clip(image, left, top, sizeWidth, sizeHeight)
           result.push(base64)
         }
       }
@@ -207,17 +207,6 @@ function divideByNumber(base64, options){
       resolve({result, size})
     }
   })
-}
-
-function clipImage(image, left, top, width, height){
-  width = Math.min(image.width - left, width)
-  height = Math.min(image.height - top, height)
-  var canvas = document.createElement('canvas')
-  canvas.width = width
-  canvas.height = height
-  var context = canvas.getContext('2d')
-  context.drawImage(image, left, top, width, height, 0, 0, width, height)
-  return canvas.toDataURL()
 }
 </script>
 
