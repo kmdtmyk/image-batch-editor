@@ -54,6 +54,7 @@ import _ from 'lodash'
 import path from 'path'
 import moment from 'moment'
 import ImageUtil from './lib/ImageUtil'
+import FileUtil from './lib/FileUtil'
 import MyImage from './components/Image'
 const del = global.require('del')
 
@@ -82,12 +83,12 @@ export default{
         return;
       }
       this.clear()
-      var underImage =  await ImageUtil.fileToImage(this.under)
+      var underImage =  await FileUtil.toImage(this.under)
       var results = []
       var now = Date.now()
       for(var i = 0; i < this.files.length; i++){
         var file = this.files[i]
-        var fileImage =  await ImageUtil.fileToImage(file)
+        var fileImage =  await FileUtil.toImage(file)
         var base64 = await combineImage(underImage, fileImage, this.options)
         var src
         if(this.options.outputMode === 'file'){

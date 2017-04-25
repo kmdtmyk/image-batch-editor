@@ -68,6 +68,7 @@ import _ from 'lodash'
 import path from 'path'
 import moment from 'moment'
 import ImageUtil from './lib/ImageUtil'
+import FileUtil from './lib/FileUtil'
 import MyImage from './components/Image'
 const del = global.require('del')
 
@@ -121,7 +122,7 @@ export default {
 }
 
 async function divide(file, options){
-  var base64 =  await ImageUtil.fileToBase64(file)
+  var base64 =  await FileUtil.toBase64(file)
   const mode = options.mode
   if(mode === 'size'){
     var {result, size} = await divideBySize(base64, options.size)

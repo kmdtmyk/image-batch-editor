@@ -67,6 +67,7 @@ import _ from 'lodash'
 import path from 'path'
 import moment from 'moment'
 import ImageUtil from './lib/ImageUtil'
+import FileUtil from './lib/FileUtil'
 import MyImage from './components/Image'
 
 const del = global.require('del')
@@ -103,7 +104,7 @@ export default{
       var now = Date.now()
       var results = []
       for(var file of this.files){
-        var image =  await ImageUtil.fileToImage(file)
+        var image =  await FileUtil.toImage(file)
         var width
         var height
         if(this.options.mode === 'scale'){
