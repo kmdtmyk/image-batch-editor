@@ -63,7 +63,6 @@
 </template>
 
 <script>
-import _ from 'lodash'
 import path from 'path'
 import moment from 'moment'
 import ImageUtil from './lib/ImageUtil'
