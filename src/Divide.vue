@@ -57,7 +57,7 @@
 
     <div v-for='result in results' class='result' contenteditable>
       <div v-for='row in result'>
-        <my-image :src='image.src' :key='index' v-for='(image, index) in row'/>
+        <image-tag :src='image.src' :key='index' v-for='(image, index) in row'/>
       </div>
     </div>
   </div>
@@ -69,12 +69,12 @@ import path from 'path'
 import moment from 'moment'
 import ImageUtil from './lib/ImageUtil'
 import FileUtil from './lib/FileUtil'
-import MyImage from './components/Image'
+import ImageTag from './components/ImageTag'
 const del = global.require('del')
 
 export default {
   components: {
-    MyImage
+    ImageTag
   },
   data(){
     return {

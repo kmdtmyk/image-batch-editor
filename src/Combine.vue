@@ -44,7 +44,7 @@
     </div>
 
     <div v-if='results.length' class='result' contenteditable>
-      <my-image v-for='(image, index) in results' :key='index' :src='image.src'/>
+      <image-tag v-for='(image, index) in results' :key='index' :src='image.src'/>
     </div>
   </div>
 </template>
@@ -55,12 +55,12 @@ import path from 'path'
 import moment from 'moment'
 import ImageUtil from './lib/ImageUtil'
 import FileUtil from './lib/FileUtil'
-import MyImage from './components/Image'
+import ImageTag from './components/ImageTag'
 const del = global.require('del')
 
 export default{
   components: {
-    MyImage
+    ImageTag
   },
   data(){
     return {
