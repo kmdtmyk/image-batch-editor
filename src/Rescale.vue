@@ -114,7 +114,7 @@ export default{
           width = this.options.size.width
           height = this.options.size.height
         }
-        var base64 = await rescaleImage(image, {width, height})
+        var base64 = ImageUtil.rescale(image, width, height)
         var src
         if(this.options.outputMode === 'file'){
           var filepath = path.join('log', 'rescale', file.name)
@@ -137,17 +137,6 @@ export default{
       del.sync('log/rescale/*')
     }
   }
-}
-
-function rescaleImage(image, options){
-  var width = options.width || image.width
-  var height = options.height || image.height
-  var canvas = document.createElement('canvas')
-  canvas.width = width
-  canvas.height = height
-  var context = canvas.getContext('2d')
-  context.drawImage(image, 0, 0, image.width, image.height, 0, 0, width, height)
-  return canvas.toDataURL()
 }
 </script>
 

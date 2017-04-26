@@ -26,4 +26,15 @@ export default class{
     return canvas.toDataURL()
   }
 
+  static rescale(image, width, height){
+    width = width || image.width
+    height = height || image.height
+    var canvas = document.createElement('canvas')
+    canvas.width = width
+    canvas.height = height
+    var context = canvas.getContext('2d')
+    context.drawImage(image, 0, 0, image.width, image.height, 0, 0, width, height)
+    return canvas.toDataURL()
+  }
+
 }
