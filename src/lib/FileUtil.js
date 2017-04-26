@@ -1,4 +1,5 @@
 const fs = global.require('fs-extra')
+const del = global.require('del')
 
 export default class{
 
@@ -21,6 +22,10 @@ export default class{
         resolve(e.target.result)
       }
     })
+  }
+
+  static deleteSync(path){
+    del.sync(path)
   }
 
 }

@@ -70,7 +70,6 @@ import moment from 'moment'
 import ImageUtil from './lib/ImageUtil'
 import FileUtil from './lib/FileUtil'
 import ImageTag from './components/ImageTag'
-const del = global.require('del')
 
 export default {
   components: {
@@ -116,7 +115,7 @@ export default {
     clear(){
       this.progress = 0
       this.results = []
-      del.sync('log/divide/*')
+      FileUtil.deleteSync('log/divide/*')
     }
   }
 }
