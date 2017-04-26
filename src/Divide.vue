@@ -33,11 +33,11 @@
       </div>
       <div>
         <label>縦</label>
-        <input type='number' v-model.number='options.number.vertical'>個
+        <input type='number' v-model.number='options.number.col'>個
       </div>
       <div>
         <label>横</label>
-        <input type='number' v-model.number='options.number.horizontal'>個
+        <input type='number' v-model.number='options.number.row'>個
       </div>
     </div>
 
@@ -86,8 +86,8 @@ export default {
           height: 200,
         },
         number: {
-          vertical: 2,
-          horizontal: 3,
+          row: 2,
+          col: 3,
         },
       },
       results: [],
@@ -122,19 +122,27 @@ export default {
 }
 
 async function divide(file, options){
-  var base64 =  await FileUtil.toBase64(file)
+  var image = await FileUtil.toImage(file)
   const mode = options.mode
+  var col
+  var row
   if(mode === 'size'){
-    var {result, size} = await divideBySize(base64, options.size)
+    var width = options.size.width
+    var height = options.size.height
+    col = Math.ceil(image.width / width)
+    row = Math.ceil(image.height / height)
+    var result = ImageUtil.split(image, width, height)
   }else if(mode === 'number'){
-    var {result, size} = await divideByNumber(base64, options.number)
+    col = Math.max(options.number.col, 1)
+    row = Math.max(options.number.row, 1)
+    var result = ImageUtil.divide(image, col, row)
   }
   var results = []
   var now = Date.now()
-  for(var y = 0; y < size.row; y++){
-    var row = []
-    for(var x = 0; x < size.col; x++){
-      var base64 = result[size.col * y + x]
+  for(var y = 0; y < row; y++){
+    var array = []
+    for(var x = 0; x < col; x++){
+      var base64 = result[col * y + x]
       var src
       if(options.outputMode === 'file'){
         var filename = path.join('log', 'divide', file.name, (y + 1) + '-' + (x + 1) + '.png')
@@ -142,71 +150,11 @@ async function divide(file, options){
       }else{
         src = base64
       }
-      row.push({src})
+      array.push({src})
     }
-    results.push(row)
+    results.push(array)
   }
   return results
-}
-
-function divideBySize(base64, options){
-  var sizeWidth = Math.max(options.width, 0)
-  var sizeHeight = Math.max(options.height, 0)
-  var image = new Image()
-  image.src = base64
-  return new Promise((resolve) => {
-    image.onload = (e) => {
-      if(!sizeWidth){
-        sizeWidth = image.width
-      }
-      if(!sizeHeight){
-        sizeHeight = image.height
-      }
-      var result = []
-      var top = 0
-      do{
-        var left = 0
-        do{
-          var base64 = ImageUtil.clip(image, left, top, sizeWidth, sizeHeight)
-          result.push(base64)
-          left += sizeWidth
-        }while(left < image.width)
-        top += sizeHeight
-      }while(top < image.height)
-      var col = Math.ceil(image.width / sizeWidth)
-      var row = Math.ceil(image.height / sizeHeight)
-      var size = {col, row}
-      resolve({result, size})
-    }
-  })
-}
-
-function divideByNumber(base64, options){
-  var vertical = Math.max(options.vertical, 1)
-  var horizontal = Math.max(options.horizontal, 1)
-  var image = new Image()
-  image.src = base64
-  return new Promise((resolve) => {
-    image.onload = (e) => {
-      var width = image.width
-      var height = image.height
-      var sizeWidth = width / horizontal
-      var sizeHeight = height / vertical
-      var result = []
-      for(var i = 0; i < vertical; i++){
-        for(var j = 0; j < horizontal; j++){
-          var left = sizeWidth * j
-          var top = sizeHeight * i
-          var base64 = ImageUtil.clip(image, left, top, sizeWidth, sizeHeight)
-          result.push(base64)
-        }
-      }
-      var col = horizontal
-      var row = vertical
-      var size = {col, row}
-      resolve({result, size})
-    }
-  })
 }
 </script>
 
