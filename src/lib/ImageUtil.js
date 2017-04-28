@@ -71,4 +71,14 @@ export default class{
     return result
   }
 
+  static combine(image1, image2, left, top, width, height){
+    var canvas = document.createElement('canvas')
+    canvas.width = image1.width
+    canvas.height = image1.height
+    var context = canvas.getContext('2d')
+    context.drawImage(image1, 0, 0)
+    context.drawImage(image2, 0, 0, width, height, left, top, width, height)
+    return canvas.toDataURL()
+  }
+
 }

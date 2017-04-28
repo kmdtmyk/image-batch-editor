@@ -83,11 +83,12 @@ export default{
       this.clear()
       var underImage =  await FileUtil.toImage(this.under)
       var results = []
+      var options = this.options
       var now = Date.now()
       for(var i = 0; i < this.files.length; i++){
         var file = this.files[i]
         var fileImage =  await FileUtil.toImage(file)
-        var base64 = await combineImage(underImage, fileImage, this.options)
+        var base64 = ImageUtil.combine(underImage, fileImage, options.left, options.top, options.width, options.height)
         var src
         if(this.options.outputMode === 'file'){
           var filepath = path.join('log', 'combine', file.name)
@@ -114,16 +115,6 @@ export default{
       FileUtil.deleteSync('log/combine/*')
     }
   }
-}
-
-function combineImage(under, image, options){
-  var canvas = document.createElement('canvas')
-  canvas.width = under.width
-  canvas.height = under.height
-  var context = canvas.getContext('2d')
-  context.drawImage(under, 0, 0)
-  context.drawImage(image, 0, 0, options.width, options.height, options.left, options.top, options.width, options.height)
-  return canvas.toDataURL()
 }
 </script>
 
