@@ -4,8 +4,8 @@ const del = global.require('del')
 export default class{
 
   static async toImage(file){
-    var base64 = await this.toBase64(file)
-    var image = new Image()
+    const base64 = await this.toBase64(file)
+    const image = new Image()
     image.src = base64
     return new Promise((resolve) => {
       image.onload = (e) => {
@@ -15,7 +15,7 @@ export default class{
   }
 
   static toBase64(file){
-    var reader = new FileReader()
+    const reader = new FileReader()
     reader.readAsDataURL(file)
     return new Promise((resolve) => {
       reader.onload = (e) => {

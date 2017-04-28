@@ -98,12 +98,12 @@ export default{
         return;
       }
       this.clear()
-      var now = Date.now()
-      var results = []
-      for(var file of this.files){
-        var image =  await FileUtil.toImage(file)
-        var width
-        var height
+      const now = Date.now()
+      const results = []
+      for(const file of this.files){
+        const image =  await FileUtil.toImage(file)
+        let width
+        let height
         if(this.options.mode === 'scale'){
           width = image.width * this.options.scale.width / 100
           height = image.height * this.options.scale.height / 100
@@ -111,10 +111,10 @@ export default{
           width = this.options.size.width
           height = this.options.size.height
         }
-        var base64 = ImageUtil.resize(image, width, height)
-        var src
+        const base64 = ImageUtil.resize(image, width, height)
+        let src
         if(this.options.outputMode === 'file'){
-          var filepath = path.join('log', 'resize', file.name)
+          const filepath = path.join('log', 'resize', file.name)
           src = await ImageUtil.writeFileBase64(base64, filepath) + '?' + now
         }else{
           src = base64

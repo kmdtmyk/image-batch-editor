@@ -100,8 +100,8 @@ export default {
       }
       this.clear()
 
-      var results = []
-      for(var file of this.files){
+      const results = []
+      for(const file of this.files){
         results.push(await divide(file, this.options))
         this.progress += 1
       }
@@ -120,30 +120,31 @@ export default {
 }
 
 async function divide(file, options){
-  var image = await FileUtil.toImage(file)
+  const image = await FileUtil.toImage(file)
   const mode = options.mode
-  var col
-  var row
+  let col
+  let row
+  let result
   if(mode === 'size'){
-    var width = options.size.width
-    var height = options.size.height
+    const width = options.size.width
+    const height = options.size.height
     col = Math.ceil(image.width / width)
     row = Math.ceil(image.height / height)
-    var result = ImageUtil.split(image, width, height)
+    result = ImageUtil.split(image, width, height)
   }else if(mode === 'number'){
     col = Math.max(options.number.col, 1)
     row = Math.max(options.number.row, 1)
-    var result = ImageUtil.divide(image, col, row)
+    result = ImageUtil.divide(image, col, row)
   }
-  var results = []
-  var now = Date.now()
-  for(var y = 0; y < row; y++){
-    var array = []
-    for(var x = 0; x < col; x++){
-      var base64 = result[col * y + x]
-      var src
+  const results = []
+  const now = Date.now()
+  for(let y = 0; y < row; y++){
+    const array = []
+    for(let x = 0; x < col; x++){
+      const base64 = result[col * y + x]
+      let src
       if(options.outputMode === 'file'){
-        var filename = path.join('log', 'divide', file.name, (y + 1) + '-' + (x + 1) + '.png')
+        const filename = path.join('log', 'divide', file.name, (y + 1) + '-' + (x + 1) + '.png')
         src = await ImageUtil.writeFileBase64(base64, filename) + '?' + now
       }else{
         src = base64

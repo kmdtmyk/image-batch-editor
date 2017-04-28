@@ -81,17 +81,17 @@ export default{
         return;
       }
       this.clear()
-      var underImage =  await FileUtil.toImage(this.under)
-      var results = []
-      var options = this.options
-      var now = Date.now()
-      for(var i = 0; i < this.files.length; i++){
-        var file = this.files[i]
-        var fileImage =  await FileUtil.toImage(file)
-        var base64 = ImageUtil.combine(underImage, fileImage, options.left, options.top, options.width, options.height)
-        var src
-        if(this.options.outputMode === 'file'){
-          var filepath = path.join('log', 'combine', file.name)
+      const underImage =  await FileUtil.toImage(this.under)
+      const results = []
+      const options = this.options
+      const now = Date.now()
+      for(let i = 0; i < this.files.length; i++){
+        const file = this.files[i]
+        const fileImage =  await FileUtil.toImage(file)
+        const base64 = ImageUtil.combine(underImage, fileImage, options.left, options.top, options.width, options.height)
+        let src
+        if(options.outputMode === 'file'){
+          const filepath = path.join('log', 'combine', file.name)
           src = await ImageUtil.writeFileBase64(base64, filepath) + '?' + now
         }else{
           src = base64
