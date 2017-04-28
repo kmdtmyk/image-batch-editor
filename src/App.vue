@@ -2,7 +2,7 @@
   <div style='height: 100%;'>
     <router-link to='/divide'>divide</router-link>
     <router-link to='/combine'>combine</router-link>
-    <router-link to='/rescale'>rescale</router-link>
+    <router-link to='/resize'>resize</router-link>
     <router-view></router-view>
   </div>
 </template>

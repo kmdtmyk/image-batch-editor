@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import App from './App'
 import Divide from './Divide'
 import Combine from './Combine'
-import Rescale from './Rescale'
+import Resize from './Resize'
 
 Vue.use(VueRouter)
 
@@ -14,7 +14,7 @@ const routes = [
     children: [
       { path: 'divide', component: Divide },
       { path: 'combine', component: Combine },
-      { path: 'rescale', component: Rescale },
+      { path: 'resize', component: Resize },
     ],
   },
 ]

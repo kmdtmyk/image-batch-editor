@@ -111,10 +111,10 @@ export default{
           width = this.options.size.width
           height = this.options.size.height
         }
-        var base64 = ImageUtil.rescale(image, width, height)
+        var base64 = ImageUtil.resize(image, width, height)
         var src
         if(this.options.outputMode === 'file'){
-          var filepath = path.join('log', 'rescale', file.name)
+          var filepath = path.join('log', 'resize', file.name)
           src = await ImageUtil.writeFileBase64(base64, filepath) + '?' + now
         }else{
           src = base64
@@ -131,7 +131,7 @@ export default{
     clear(){
       this.progress = 0
       this.results = []
-      FileUtil.deleteSync('log/rescale/*')
+      FileUtil.deleteSync('log/resize/*')
     }
   }
 }

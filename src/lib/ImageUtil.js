@@ -26,7 +26,7 @@ export default class{
     return canvas.toDataURL()
   }
 
-  static rescale(image, width, height){
+  static resize(image, width, height){
     width = width || image.width
     height = height || image.height
     var canvas = document.createElement('canvas')
