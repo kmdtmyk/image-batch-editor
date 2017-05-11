@@ -10,7 +10,7 @@ export default class{
         if(err){
           throw err
         }
-        resolve(path.resolve(global.process.cwd(), filename))
+        resolve(path.join(global.process.cwd(), filename))
       })
     })
   }

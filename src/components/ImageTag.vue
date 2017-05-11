@@ -1,12 +1,35 @@
 <template>
-  <img :src='src'>
+  <img :src='src' @contextmenu='contextmenu'>
 </template>
 
 <script>
+const { remote, shell, nativeImage, clipboard } = electron
+const { Menu, MenuItem } = remote
+
 export default{
   props: [
     'src'
-  ]
+  ],
+  methods: {
+    contextmenu(e){
+      const src = this.src.split('?')[0]
+      const menu = new Menu()
+      menu.append(new MenuItem({
+        label: 'open',
+        click(){
+          shell.openExternal(src)
+        }
+      }))
+      menu.append(new MenuItem({
+        label: 'copy',
+        click(){
+          const image = nativeImage.createFromPath(src)
+          clipboard.writeImage(image)
+        }
+      }))
+      menu.popup(remote.getCurrentWindow())
+    }
+  }
 }
 </script>
 
