@@ -4,9 +4,10 @@
   "description": "image batch editor",
   "main": "index.js",
   "scripts": {
-    "webpack": "webpack -w",
+    "start": "npm-run-all --parallel start:*",
+    "start:webpack": "webpack -w",
+    "start:electron": "electron .",
     "server": "webpack-dev-server",
-    "electron": "electron .",
     "build": "electron-packager . ImageBatchEditor --platform=win32 --arch=x64 --overwrite --electron-version=1.6.2 --asar=true --out=build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,6 +24,7 @@
     "fs-extra": "^2.1.2",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
+    "npm-run-all": "^4.0.2",
     "vue": "^2.2.6",
     "vue-loader": "^11.3.4",
     "vue-router": "^2.4.0",
