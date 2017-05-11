@@ -1,5 +1,5 @@
 <template>
-  <img :src='src' @contextmenu='contextmenu'>
+  <img :src='url' @contextmenu='contextmenu'>
 </template>
 
 <script>
@@ -10,9 +10,22 @@ export default{
   props: [
     'src'
   ],
+  beforeCreate(){
+    this.now = Date.now()
+  },
+  computed: {
+    url(){
+      const { src } = this
+      if(src.match(/^data:/)){
+        return src
+      }else{
+        return src + '?' + this.now
+      }
+    }
+  },
   methods: {
     contextmenu(e){
-      const src = this.src.split('?')[0]
+      const src = this.src
       const menu = new Menu()
       menu.append(new MenuItem({
         label: 'open',

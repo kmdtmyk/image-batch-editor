@@ -98,7 +98,6 @@ export default{
         return;
       }
       this.clear()
-      const now = Date.now()
       const results = []
       for(const file of this.files){
         const image =  await FileUtil.toImage(file)
@@ -115,7 +114,7 @@ export default{
         let src
         if(this.options.outputMode === 'file'){
           const filepath = path.join('log', 'resize', file.name)
-          src = await ImageUtil.writeFileBase64(base64, filepath) + '?' + now
+          src = await ImageUtil.writeFileBase64(base64, filepath)
         }else{
           src = base64
         }

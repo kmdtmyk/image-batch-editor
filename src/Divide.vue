@@ -137,7 +137,6 @@ async function divide(file, options){
     result = ImageUtil.divide(image, col, row)
   }
   const results = []
-  const now = Date.now()
   for(let y = 0; y < row; y++){
     const array = []
     for(let x = 0; x < col; x++){
@@ -145,7 +144,7 @@ async function divide(file, options){
       let src
       if(options.outputMode === 'file'){
         const filename = path.join('log', 'divide', file.name, (y + 1) + '-' + (x + 1) + '.png')
-        src = await ImageUtil.writeFileBase64(base64, filename) + '?' + now
+        src = await ImageUtil.writeFileBase64(base64, filename)
       }else{
         src = base64
       }
