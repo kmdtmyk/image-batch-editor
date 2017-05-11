@@ -14,9 +14,12 @@ export default{
     this.now = Date.now()
   },
   computed: {
+    isBase64(){
+      return this.src.match(/^data:/) !== null
+    },
     url(){
       const { src } = this
-      if(src.match(/^data:/)){
+      if(this.isBase64){
         return src
       }else{
         return src + '?' + this.now
@@ -29,6 +32,7 @@ export default{
       const menu = new Menu()
       menu.append(new MenuItem({
         label: 'open',
+        enabled: !this.isBase64,
         click(){
           shell.openExternal(src)
         }
