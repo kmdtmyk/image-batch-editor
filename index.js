@@ -1,4 +1,5 @@
 const { app, BrowserWindow, protocol } = require('electron')
+const windowStateKeeper = require('electron-window-state')
 const path = require('path')
 const url = require('url')
 
@@ -8,11 +9,16 @@ let mainWindow
 
 //  初期化が完了した時の処理
 app.on('ready', function(){
-  // メインウィンドウを作成します
-  mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800
+
+  const windowState = windowStateKeeper({
+    defaultWidth: 1024,
+    defaultHeight: 768,
   })
+
+  // メインウィンドウを作成します
+  mainWindow = new BrowserWindow(windowState)
+
+  windowState.manage(mainWindow)
 
   // メインウィンドウに表示するURLを指定します
   // （今回はmain.jsと同じディレクトリのindex.html）
